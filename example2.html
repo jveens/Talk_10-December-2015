@@ -37,26 +37,47 @@
 		camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 		// Create a directional light so objects in the scene can be seen
-		var directionalLight = new THREE.DirectionalLight(new THREE.Color("#FFFFFF"), 1.0); 
+		var directionalLight = new THREE.DirectionalLight(new THREE.Color("#FFFFFF"), 1.5); 
 
 		// Set the x/y/z poition of the directional light
-		directionalLight.position.set(0, 1, 3); 
+		directionalLight.position.set(2, 2, 2); 
 
 		// Add the light to the scene
 		scene.add(directionalLight);
 
 		// Create a box geometry using the three.js object
-		var boxGeometry = new THREE.BoxGeometry( 1, 1, 1 );
+		var boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 
-		// Create a mesh for the object. Different materials have different properties. 
-		//MeshLabertMaterial is pretty basic but affected by light.
-		var boxMaterial = new THREE.MeshLambertMaterial({
-			color: new THREE.Color("#FEFEFE"), 
-			side:THREE.DoubleSide 
-		});
+		// Create the array of materials to be applied to the faces of the cube
+		var materials = [
+			new THREE.MeshLambertMaterial({ 
+				map: new THREE.ImageUtils.loadTexture("assets/example2/1.jpg"),
+				side:THREE.DoubleSide 
+			}),
+			new THREE.MeshLambertMaterial({ 
+				map: new THREE.ImageUtils.loadTexture("assets/example2/2.jpg"),
+				side:THREE.DoubleSide 
+			}),
+			new THREE.MeshLambertMaterial({ 
+				map: new THREE.ImageUtils.loadTexture("assets/example2/3.jpg"),
+				side:THREE.DoubleSide 
+			}),
+			new THREE.MeshLambertMaterial({ 
+				map: new THREE.ImageUtils.loadTexture("assets/example2/4.jpg"),
+				side:THREE.DoubleSide 
+			}),
+			new THREE.MeshLambertMaterial({ 
+				map: new THREE.ImageUtils.loadTexture("assets/example2/5.jpg"),
+				side:THREE.DoubleSide 
+			}),
+			new THREE.MeshLambertMaterial({ 
+				map: new THREE.ImageUtils.loadTexture("assets/example2/6.jpg"),
+				side:THREE.DoubleSide 
+			})
+		];
 
 		// Create the box mesh using the geometry and material
-		var boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+		var boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshFaceMaterial(materials));
 
 		// Add the box to the scene
 		scene.add(boxMesh);
