@@ -2,9 +2,10 @@
 <html lang="en-us">
 	<head>
 		<meta charset="UTF-8">
-		<title>Example 4</title>
+		<title>Example 5</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script type="text/javascript" src="assets/three.min.js"></script>
+		<script type="text/javascript" src="assets/OrbitControls.js"></script>
 		<link rel="stylesheet" type="text/css" href="assets/styles.css" media="screen">
 	</head>
 	<body>
@@ -36,14 +37,28 @@
 		// Set the location  x/y/z position the camera should look at
 		camera.lookAt(new THREE.Vector3(0, 0, 0));
 
+		var controls = new THREE.OrbitControls( camera );
+		controls.minDistance = 0;
+		controls.maxDistance = 100;
+		controls.update();
+
 		// Create a directional light so objects in the scene can be seen
-		var directionalLight = new THREE.DirectionalLight(new THREE.Color("#FFFFFF"), 1.5); 
+		var directionalLight1 = new THREE.DirectionalLight(new THREE.Color("#FFFFFF"), 0.8),
+			directionalLight2 = new THREE.DirectionalLight(new THREE.Color("#FFFFFF"), 0.8),
+			directionalLight3 = new THREE.DirectionalLight(new THREE.Color("#FFFFFF"), 0.8),
+			directionalLight4 = new THREE.DirectionalLight(new THREE.Color("#FFFFFF"), 0.8); 
 
 		// Set the x/y/z poition of the directional light
-		directionalLight.position.set(2, 2, 2); 
+		directionalLight1.position.set(3, 3, 3);
+		directionalLight2.position.set(-3, 3, 3); 
+		directionalLight3.position.set(3, -3, -3); 
+		directionalLight4.position.set(-3, -3, -3); 
 
 		// Add the light to the scene
-		scene.add(directionalLight);
+		scene.add(directionalLight1);
+		scene.add(directionalLight2);
+		scene.add(directionalLight3);
+		scene.add(directionalLight4);
 
 		// Create a box geometry using the three.js object
 		var boxGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -93,26 +108,11 @@
 		render();
 
 		// Add a resize event to the window so the scene resizes if the window changs size
-		window.addEventListener('resize', function() {
+		window.addEventListener( 'resize', function() {
 			camera.aspect = window.innerWidth / window.innerHeight;
 		    camera.updateProjectionMatrix();
 
 		    renderer.setSize(window.innerWidth, window.innerHeight);
 		}, false);
-
-		window.addEventListener('click', function(e) {
-			var mousePosition = new THREE.Vector2();
-
-			//tanslates a mouse click to a scene click
-			mousePosition.x = 2 * (e.x / renderer.domElement.clientWidth) - 1;
-			mousePosition.y = 1 - 2 * ( e.y / renderer.domElement.clientHeight );
-
-	    	var raycaster = new THREE.Raycaster();
-			raycaster.setFromCamera(mousePosition, camera);
-
-		    var intersected = raycaster.intersectObject(scene, true);
-
-		    if (intersected.length > 0) alert("It's a hit!");
-		});
 	</script>
 </html>
